@@ -10,6 +10,10 @@
               font-family: Montserrat;
             }
 
+            img {
+              border: 0;
+            }
+
             .is-hidden {
                 display: none;
             }
@@ -96,6 +100,13 @@
                 text-align: center;
                 width: 120px;
             }
+            #answers{
+              position: absolute;
+              bottom: 50;
+              margin-left: 5px;
+              left: 0;
+              font-size: 16px;
+            }
         </style>
   </head>
   <body>
@@ -110,11 +121,14 @@
     <button class="show" id="show">Show media</button>
     <button class="hide is-hidden" id="hide">Hide media</button>
 
+    <div id="answers"></div>
+
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
         var numCorrectAnswers = 0;
         var numPlayers = 0;
+        var numAnswers = 0;
 
         function componentToHex(c) {
           var hex = Math.round(c).toString(16);
@@ -140,7 +154,9 @@
         }
 
         function resetScreen() {
-          document.getElementById('percentage').innerHTML = 0 + '%';
+          percentage = 0;
+          numPlayers = 0;
+          document.getElementById('percentage').innerHTML = '';
           document.body.style = "background-color: white";
           document.getElementById('emoji').src = '';
         }
@@ -155,8 +171,13 @@
         }
 
         function answerReceived() {
+            numAnswers++;
+            if (numPlayers === numAnswers) {
+              numAnswers = 'All';
+            }
             var percentage = Math.round(getPercentageCorrect());
             document.getElementById('percentage').innerHTML = percentage + '%';
+            document.getElementById('answers').innerHTML = numAnswers + ' answers received';
 
             updateBackgroundColour(percentage);
 
@@ -169,7 +190,7 @@
             } else if (percentage > 50) {
                 emoji = "meh_emoji.svg";
             } else if (percentage > 25) {
-                emoji = "sob_emoji.svg";
+                emoji = "meh_emoji.svg";
             } else {
                 emoji = "sob_emoji.svg"
             }
@@ -211,6 +232,7 @@
 
         button.addEventListener('click', function() {
             io.emit('next');
+            resetScreen()
         });
 
         button2.addEventListener('click', function() {
@@ -231,6 +253,8 @@
         io.on('wrongAnswerReceived', wrongAnswerReceived);
 
         io.on('questionStarted', questionStarted);
+
+        resetScreen();
     </script>
   </body>
 </html>
