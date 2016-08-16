@@ -29,18 +29,18 @@
               text-align: center;
               color: #fff;
               outline: none;
-							box-sizing: border-box;
-							-webkit-appearance: button;
+              box-sizing: border-box;
+              -webkit-appearance: button;
               overflow: visible;
-          }
+            }
 
-          button:hover {
-            height: 2.375rem;
-            margin-top: 2px;
-            padding-bottom: .125rem;
-            background-color: #3b8bc3;
-            box-shadow: rgba(0,0,0,.25) 0 -.125rem inset;
-          }
+            button:hover {
+              height: 2.375rem;
+              margin-top: 2px;
+              padding-bottom: .125rem;
+              background-color: #3b8bc3;
+              box-shadow: rgba(0,0,0,.25) 0 -.125rem inset;
+            }
 
             .show,
             .hide {
@@ -104,9 +104,10 @@
         }
 
         function getColourFromPercentage (percentage) {
-          var green = 55 + (percentage * 2);
-          var red = 255 - (percentage * 2);
-          return rgbToHex(red, green, 0);
+          var green = 100 + (percentage);
+          var red = 226 - (percentage * 2.2);
+          var blue = 60 - (percentage * 0.2)
+          return rgbToHex(red, green, blue);
         }
 
         function updateBackgroundColour(percentage) {
@@ -114,6 +115,11 @@
             "background-color: " +
             getColourFromPercentage(percentage)
           );
+        }
+
+        function resetScreen() {
+          document.getElementById('percentage').innerHTML = 0 + '%';
+          document.body.style = "background-color: white";
         }
 
         function correctAnswerReceived() {
@@ -175,6 +181,7 @@
 
         button.addEventListener('click', function() {
             io.emit('next');
+            resetScreen();
         });
 
         button2.addEventListener('click', function() {
