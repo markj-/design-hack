@@ -38,6 +38,11 @@ io.on('connection', function(socket){
 		host.emit('correctAnswerReceived');
 	});
 
+	socket.on('wrongAnswerReceived', function() {
+		console.log('wrong answer received');
+		host.emit('wrongAnswerReceived');
+	});
+
 	socket.on('questionStarted', function(data) {
 		console.log('question started');
 		host.emit('questionStarted', data);

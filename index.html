@@ -5,6 +5,7 @@
 	<body>
 
 	<button id="correctAnswerReceived">Correct Answer received</button>
+	<button id="wrongAnswerReceived">Wrong Answer received</button>
 	<button id="questionStarted">Start question</button>
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
@@ -19,6 +20,9 @@
 
 	    function correctAnswerReceived() {
 	    	io.emit('correctAnswerReceived');
+	    }
+			function wrongAnswerReceived() {
+	    	io.emit('wrongAnswerReceived');
 	    }
 
 	    function questionStarted() {

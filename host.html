@@ -3,7 +3,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
         <link rel="stylesheet" href="normalize.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"></link>
         <style>
+            body {
+              min-width: 360px;
+              font-family: Montserrat;
+            }
+
             .is-hidden {
                 display: none;
             }
@@ -22,6 +28,7 @@
               height: 2.5rem;
               padding: 0 1rem .25rem;
               border-radius: .25rem;
+              margin: 5px;
               background: #45a3e5;
               box-shadow: rgba(0,0,0,.25) 0 -.25rem inset;
               font-family: "Montserrat","Helvetica Neue",helvetica,arial,sans-serif;
@@ -47,18 +54,29 @@
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                width: 49%;
+                width: 47%;
                 border-style: none;
-                font-size: 22px;
+                font-size: 16px;
             }
 
             .next {
                 position: absolute;
                 bottom: 0;
                 right: 0;
-                width: 50%;
+                width: 47%;
                 border-style: none;
-                font-size: 20px;
+                font-size: 16px;
+            }
+
+            #footer {
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              padding: 1.7rem;
+              background-color: #FFFFFF;
+              text-align: center;
+              z-index: -1;
             }
 
             #percentage {
@@ -76,6 +94,7 @@
                 left: 50%;
                 margin-left: -60px;
                 text-align: center;
+                width: 120px;
             }
         </style>
   </head>
@@ -83,11 +102,14 @@
 
     <button class="next" id="next">Next</button>
 
+
+
+    <img id="emoji"></img>
+    <div id="percentage">0%</div>
+
     <button class="show" id="show">Show media</button>
     <button class="hide is-hidden" id="hide">Hide media</button>
 
-    <div id="emoji"></div>
-    <div id="percentage">0%</div>
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
@@ -104,8 +126,8 @@
         }
 
         function getColourFromPercentage (percentage) {
-          var green = 100 + (percentage);
-          var red = 226 - (percentage * 2.2);
+          var green = 75 + (percentage);
+          var red = 255 - (percentage * 2.55);
           var blue = 60 - (percentage * 0.2)
           return rgbToHex(red, green, blue);
         }
@@ -120,10 +142,19 @@
         function resetScreen() {
           document.getElementById('percentage').innerHTML = 0 + '%';
           document.body.style = "background-color: white";
+          document.getElementById('emoji').src = '';
         }
 
         function correctAnswerReceived() {
-            numCorrectAnswers++;
+          numCorrectAnswers++;
+          answerReceived()
+        }
+
+        function wrongAnswerReceived() {
+          answerReceived()
+        }
+
+        function answerReceived() {
             var percentage = Math.round(getPercentageCorrect());
             document.getElementById('percentage').innerHTML = percentage + '%';
 
@@ -132,23 +163,22 @@
             var emoji;
 
             if (percentage > 90) {
-                emoji = "😃";
+                emoji = "yay_emoji.svg";
             } else if (percentage > 75) {
-                emoji = "😄";
+                emoji = "yay_emoji.svg";
             } else if (percentage > 50) {
-                emoji = "😊";
+                emoji = "meh_emoji.svg";
             } else if (percentage > 25) {
-                emoji = "😐";
+                emoji = "sob_emoji.svg";
             } else {
-                emoji = "😫";
+                emoji = "sob_emoji.svg"
             }
 
-            document.getElementById('emoji').innerHTML = emoji;
+            document.getElementById('emoji').src = emoji;
         }
 
         function questionStarted(data) {
-            document.getElementById('emoji').innerHTML = '';
-            document.getElementById('percentage').innerHTML = '0%';
+            resetScreen();
             numCorrectAnswers = 0;
             numPlayers = data.playerCount;
             console.log('question started with', numPlayers, 'players');
@@ -181,7 +211,6 @@
 
         button.addEventListener('click', function() {
             io.emit('next');
-            resetScreen();
         });
 
         button2.addEventListener('click', function() {
@@ -199,6 +228,7 @@
         io.emit('connectHost');
 
         io.on('correctAnswerReceived', correctAnswerReceived);
+        io.on('wrongAnswerReceived', wrongAnswerReceived);
 
         io.on('questionStarted', questionStarted);
     </script>
