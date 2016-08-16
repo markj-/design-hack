@@ -19,18 +19,22 @@ io.on('connection', function(socket){
 	socket.on('connectHost', connectHost);
 
 	socket.on('next', function() {
+		console.log('next');
 		player.emit('next');
 	});
 
 	socket.on('showImage', function() {
+		console.log('show image');
 		player.emit('showImage');
 	});
 
 	socket.on('correctAnswerReceived', function() {
+		console.log('correct answer received');
 		host.emit('correctAnswerReceived');
 	});
 
 	socket.on('questionStarted', function(data) {
+		console.log('question started');
 		host.emit('questionStarted', data);
 	});
 });
