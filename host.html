@@ -54,7 +54,7 @@
 
         function correctAnswerReceived() {
             numCorrectAnswers++;
-            var percentage = getPercentageCorrect();
+            var percentage = Math.round(getPercentageCorrect());
             document.getElementById('percentage').innerHTML = percentage + '%';
 
             var emoji;
