@@ -90,6 +90,8 @@
         }
 
         function questionStarted(data) {
+            document.getElementById('emoji').innerHTML = '';
+            document.getElementById('percentage').innerHTML = '0%';
             numCorrectAnswers = 0;
             numPlayers = data.playerCount;
             console.log('question started with', numPlayers, 'players');
