@@ -9,8 +9,8 @@
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
-	    function nextQuestion() {
-	    	alert('next question');
+	    function next() {
+	    	alert('next');
 	    }
 
 	    function showImage() {
@@ -34,7 +34,7 @@
     	button2.addEventListener('click', questionStarted);
 
     	var io = io('http://127.0.0.1:3000');
-    	io.on('nextQuestion', nextQuestion);
+    	io.on('next', next);
     	io.on('showImage', showImage);
     	io.emit('connectPlayer');
     </script>

@@ -18,8 +18,8 @@ io.on('connection', function(socket){
 	socket.on('connectPlayer', connectPlayer);
 	socket.on('connectHost', connectHost);
 
-	socket.on('nextQuestion', function() {
-		player.emit('nextQuestion');
+	socket.on('next', function() {
+		player.emit('next');
 	});
 
 	socket.on('showImage', function() {
