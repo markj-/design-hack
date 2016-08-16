@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+	    function nextQuestion() {
+	    	alert('next question');
+	    }
+
+	    function showImage() {
+	    	alert('show image');
+	    }
+
+    	var io = io('http://127.0.0.1:3000');
+    	io.on('nextQuestion', nextQuestion);
+    	io.on('showImage', showImage);
+    	io.emit('connectPlayer');
+    </script>
+	</body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+
+    <button id="next">Next</button>
+    <button id="show">Show image</button>
+
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+    	var io = io('http://127.0.0.1:3000');
+    	var button = document.getElementById('next');
+        var button2 = document.getElementById('show');
+
+        button.addEventListener('click', function() {
+            io.emit('nextQuestion');
+        });
+        button2.addEventListener('click', function() {
+            io.emit('showImage');
+        });
+
+        io.emit('connectHost');
+    </script>
+	</body>
+</html>
