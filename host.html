@@ -8,6 +8,40 @@
                 display: none;
             }
 
+            button {
+              margin: 0;
+              padding: 0;
+              border: 0;
+              background: 0 0;
+              cursor: pointer;
+              line-height: 2.25rem;
+              font-size: 1.25rem;
+              display: inline-block;
+              vertical-align: center;
+              min-width: 5.625rem;
+              height: 2.5rem;
+              padding: 0 1rem .25rem;
+              border-radius: .25rem;
+              background: #45a3e5;
+              box-shadow: rgba(0,0,0,.25) 0 -.25rem inset;
+              font-family: "Montserrat","Helvetica Neue",helvetica,arial,sans-serif;
+              font-weight: 700;
+              text-align: center;
+              color: #fff;
+              outline: none;
+							box-sizing: border-box;
+							-webkit-appearance: button;
+              overflow: visible;
+          }
+
+          button:hover {
+            height: 2.375rem;
+            margin-top: 2px;
+            padding-bottom: .125rem;
+            background-color: #3b8bc3;
+            box-shadow: rgba(0,0,0,.25) 0 -.125rem inset;
+          }
+
             .show,
             .hide {
                 position: absolute;
@@ -15,8 +49,7 @@
                 left: 0;
                 width: 49%;
                 border-style: none;
-                font-size: 18px;
-                padding: 12px;
+                font-size: 22px;
             }
 
             .next {
@@ -25,13 +58,7 @@
                 right: 0;
                 width: 50%;
                 border-style: none;
-                font-size: 18px;
-                padding: 12px;
-            }
-
-            .next:hover {
-                background-color: #ccc;
-                cursor: pointer;
+                font-size: 20px;
             }
 
             #percentage {
@@ -125,8 +152,8 @@
             return (numCorrectAnswers / numPlayers) * 100;
         }
 
-	      var io = io('http://127.0.0.1:3000');
-	      var button = document.getElementById('next');
+        var io = io('http://127.0.0.1:3000');
+        var button = document.getElementById('next');
         var button2 = document.getElementById('show');
         var button3 = document.getElementById('hide');
 
