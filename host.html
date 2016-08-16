@@ -1,10 +1,48 @@
 <html>
 	<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title></title>
+        <link rel="stylesheet" href="normalize.css">
+        <style>
+            .next {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                border-style: none;
+                font-size: 18px;
+                padding: 12px;
+            }
+
+            .next:hover {
+                background-color: #ccc;
+                cursor: pointer;
+            }
+
+            #percentage {
+                font-size: 100px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -100px;
+                margin-left: -77px;
+                text-align: center;
+            }
+
+            #emoji {
+                font-size: 100px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -50px;
+                text-align: center;
+            }
+        </style>
 	</head>
 	<body>
 
-    <button id="next">Next</button>
+    <button class="next" id="next">Next</button>
 
     <div id="emoji"></div>
     <div id="percentage">0%</div>
