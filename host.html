@@ -7,6 +7,7 @@
     <button id="next">Next</button>
     <button id="show">Show image</button>
 
+    <div id="emoji"></div>
     <div id="percentage">0%</div>
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
@@ -16,7 +17,24 @@
 
         function correctAnswerReceived() {
             numCorrectAnswers++;
-            document.getElementById('percentage').innerHTML = getPercentageCorrect() + '%'
+            var percentage = getPercentageCorrect();
+            document.getElementById('percentage').innerHTML = percentage + '%';
+
+            var emoji;
+
+            if (percentage > 90) {
+                emoji = "😃";
+            } else if (percentage > 75) {
+                emoji = "😄";
+            } else if (percentage > 50) {
+                emoji = "😊";
+            } else if (percentage > 25) {
+                emoji = "😐";
+            } else {
+                emoji = "😫";
+            }
+
+            document.getElementById('emoji').innerHTML = emoji;
         }
 
         function questionStarted(data) {
