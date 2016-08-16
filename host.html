@@ -1,11 +1,45 @@
 <html>
-	<head>
+  <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title></title>
+    <title></title>
         <link rel="stylesheet" href="normalize.css">
         <style>
             .is-hidden {
                 display: none;
+            }
+
+            button {
+              margin: 0;
+              padding: 0;
+              border: 0;
+              background: 0 0;
+              cursor: pointer;
+              line-height: 2.25rem;
+              font-size: 1.25rem;
+              display: inline-block;
+              vertical-align: center;
+              min-width: 5.625rem;
+              height: 2.5rem;
+              padding: 0 1rem .25rem;
+              border-radius: .25rem;
+              background: #45a3e5;
+              box-shadow: rgba(0,0,0,.25) 0 -.25rem inset;
+              font-family: "Montserrat","Helvetica Neue",helvetica,arial,sans-serif;
+              font-weight: 700;
+              text-align: center;
+              color: #fff;
+              outline: none;
+              box-sizing: border-box;
+              -webkit-appearance: button;
+              overflow: visible;
+            }
+
+            button:hover {
+              height: 2.375rem;
+              margin-top: 2px;
+              padding-bottom: .125rem;
+              background-color: #3b8bc3;
+              box-shadow: rgba(0,0,0,.25) 0 -.125rem inset;
             }
 
             .show,
@@ -15,8 +49,7 @@
                 left: 0;
                 width: 49%;
                 border-style: none;
-                font-size: 18px;
-                padding: 12px;
+                font-size: 22px;
             }
 
             .next {
@@ -25,13 +58,7 @@
                 right: 0;
                 width: 50%;
                 border-style: none;
-                font-size: 18px;
-                padding: 12px;
-            }
-
-            .next:hover {
-                background-color: #ccc;
-                cursor: pointer;
+                font-size: 20px;
             }
 
             #percentage {
@@ -51,8 +78,8 @@
                 text-align: center;
             }
         </style>
-	</head>
-	<body>
+  </head>
+  <body>
 
     <button class="next" id="next">Next</button>
 
@@ -67,10 +94,40 @@
         var numCorrectAnswers = 0;
         var numPlayers = 0;
 
+        function componentToHex(c) {
+          var hex = Math.round(c).toString(16);
+          return hex.length == 1 ? "0" + hex : hex;
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+        }
+
+        function getColourFromPercentage (percentage) {
+          var green = 100 + (percentage);
+          var red = 226 - (percentage * 2.2);
+          var blue = 60 - (percentage * 0.2)
+          return rgbToHex(red, green, blue);
+        }
+
+        function updateBackgroundColour(percentage) {
+          document.body.style = (
+            "background-color: " +
+            getColourFromPercentage(percentage)
+          );
+        }
+
+        function resetScreen() {
+          document.getElementById('percentage').innerHTML = 0 + '%';
+          document.body.style = "background-color: white";
+        }
+
         function correctAnswerReceived() {
             numCorrectAnswers++;
             var percentage = Math.round(getPercentageCorrect());
             document.getElementById('percentage').innerHTML = percentage + '%';
+
+            updateBackgroundColour(percentage);
 
             var emoji;
 
@@ -101,8 +158,8 @@
             return (numCorrectAnswers / numPlayers) * 100;
         }
 
-    	var io = io('http://127.0.0.1:3000');
-    	var button = document.getElementById('next');
+        var io = io('http://127.0.0.1:3000');
+        var button = document.getElementById('next');
         var button2 = document.getElementById('show');
         var button3 = document.getElementById('hide');
 
@@ -124,6 +181,7 @@
 
         button.addEventListener('click', function() {
             io.emit('next');
+            resetScreen();
         });
 
         button2.addEventListener('click', function() {
@@ -144,5 +202,5 @@
 
         io.on('questionStarted', questionStarted);
     </script>
-	</body>
+  </body>
 </html>
