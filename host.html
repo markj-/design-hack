@@ -1,7 +1,7 @@
 <html>
-	<head>
+  <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title></title>
+    <title></title>
         <link rel="stylesheet" href="normalize.css">
         <style>
             .is-hidden {
@@ -51,8 +51,8 @@
                 text-align: center;
             }
         </style>
-	</head>
-	<body>
+  </head>
+  <body>
 
     <button class="next" id="next">Next</button>
 
@@ -67,10 +67,34 @@
         var numCorrectAnswers = 0;
         var numPlayers = 0;
 
+        function componentToHex(c) {
+          var hex = Math.round(c).toString(16);
+          return hex.length == 1 ? "0" + hex : hex;
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+        }
+
+        function getColourFromPercentage (percentage) {
+          var green = 55 + (percentage * 2);
+          var red = 255 - (percentage * 2);
+          return rgbToHex(red, green, 0);
+        }
+
+        function updateBackgroundColour(percentage) {
+          document.body.style = (
+            "background-color: " +
+            getColourFromPercentage(percentage)
+          );
+        }
+
         function correctAnswerReceived() {
             numCorrectAnswers++;
             var percentage = Math.round(getPercentageCorrect());
             document.getElementById('percentage').innerHTML = percentage + '%';
+
+            updateBackgroundColour(percentage);
 
             var emoji;
 
@@ -101,8 +125,8 @@
             return (numCorrectAnswers / numPlayers) * 100;
         }
 
-    	var io = io('http://127.0.0.1:3000');
-    	var button = document.getElementById('next');
+	      var io = io('http://127.0.0.1:3000');
+	      var button = document.getElementById('next');
         var button2 = document.getElementById('show');
         var button3 = document.getElementById('hide');
 
@@ -144,5 +168,5 @@
 
         io.on('questionStarted', questionStarted);
     </script>
-	</body>
+  </body>
 </html>
