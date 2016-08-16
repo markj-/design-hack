@@ -1,2 +1,1 @@
-web: http-server -d
-sockets: node server.js
+web: http-server -d & node server.js
