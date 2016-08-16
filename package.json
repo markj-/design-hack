@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "npm install",
-    "start": "http-server -d"
+    "start": "http-server -d",
+    "socket": "node server.js"
   },
   "author": "",
   "license": "ISC"
