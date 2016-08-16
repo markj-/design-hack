@@ -5,7 +5,6 @@
 	<body>
 
     <button id="next">Next</button>
-    <button id="show">Show image</button>
 
     <div id="emoji"></div>
     <div id="percentage">0%</div>
@@ -49,14 +48,14 @@
 
     	var io = io('http://127.0.0.1:3000');
     	var button = document.getElementById('next');
-        var button2 = document.getElementById('show');
+        // var button2 = document.getElementById('show');
 
         button.addEventListener('click', function() {
             io.emit('next');
         });
-        button2.addEventListener('click', function() {
-            io.emit('showImage');
-        });
+        // button2.addEventListener('click', function() {
+        //     io.emit('showImage');
+        // });
 
         io.emit('connectHost');
 
