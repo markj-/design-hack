@@ -7,10 +7,26 @@
     <button id="next">Next</button>
     <button id="show">Show image</button>
 
+    <div id="percentage">0%</div>
+
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
-        function answerReceived() {
-            alert('answer received');
+        var numCorrectAnswers = 0;
+        var numPlayers = 0;
+
+        function correctAnswerReceived() {
+            numCorrectAnswers++;
+            document.getElementById('percentage').innerHTML = getPercentageCorrect() + '%'
+        }
+
+        function questionStarted(data) {
+            numCorrectAnswers = 0;
+            numPlayers = data.playerCount;
+            console.log('question started with', numPlayers, 'players');
+        }
+
+        function getPercentageCorrect() {
+            return (numCorrectAnswers / numPlayers) * 100;
         }
 
     	var io = io('http://127.0.0.1:3000');
@@ -26,7 +42,9 @@
 
         io.emit('connectHost');
 
-        io.on('answerReceived', answerReceived);
+        io.on('correctAnswerReceived', correctAnswerReceived);
+
+        io.on('questionStarted', questionStarted);
     </script>
 	</body>
 </html>

@@ -4,7 +4,8 @@
 	</head>
 	<body>
 
-	<button id="answerReceived">Answer received</button>
+	<button id="correctAnswerReceived">Correct Answer received</button>
+	<button id="questionStarted">Start question</button>
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
@@ -16,12 +17,21 @@
 	    	alert('show image');
 	    }
 
-	    function answerReceived() {
-	    	io.emit('answerReceived');
+	    function correctAnswerReceived() {
+	    	io.emit('correctAnswerReceived');
 	    }
 
-    	var button = document.getElementById('answerReceived');
-    	button.addEventListener('click', answerReceived);
+	    function questionStarted() {
+	    	io.emit('questionStarted', {
+	    		playerCount: 10
+	    	});
+	    }
+
+    	var button = document.getElementById('correctAnswerReceived');
+    	button.addEventListener('click', correctAnswerReceived);
+
+    	var button2 = document.getElementById('questionStarted');
+    	button2.addEventListener('click', questionStarted);
 
     	var io = io('http://127.0.0.1:3000');
     	io.on('nextQuestion', nextQuestion);

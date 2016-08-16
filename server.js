@@ -26,8 +26,12 @@ io.on('connection', function(socket){
 		player.emit('showImage');
 	});
 
-	socket.on('answerReceived', function() {
-		host.emit('answerReceived');
+	socket.on('correctAnswerReceived', function() {
+		host.emit('correctAnswerReceived');
+	});
+
+	socket.on('questionStarted', function(data) {
+		host.emit('questionStarted', data);
 	});
 });
 
