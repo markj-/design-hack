@@ -4,6 +4,8 @@
 	</head>
 	<body>
 
+	<button id="answerReceived">Answer received</button>
+
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
 	    function nextQuestion() {
@@ -13,6 +15,13 @@
 	    function showImage() {
 	    	alert('show image');
 	    }
+
+	    function answerReceived() {
+	    	io.emit('answerReceived');
+	    }
+
+    	var button = document.getElementById('answerReceived');
+    	button.addEventListener('click', answerReceived);
 
     	var io = io('http://127.0.0.1:3000');
     	io.on('nextQuestion', nextQuestion);

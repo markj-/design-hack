@@ -25,6 +25,10 @@ io.on('connection', function(socket){
 	socket.on('showImage', function() {
 		player.emit('showImage');
 	});
+
+	socket.on('answerReceived', function() {
+		host.emit('answerReceived');
+	});
 });
 
 server.listen(3000);

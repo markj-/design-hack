@@ -9,6 +9,10 @@
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
+        function answerReceived() {
+            alert('answer received');
+        }
+
     	var io = io('http://127.0.0.1:3000');
     	var button = document.getElementById('next');
         var button2 = document.getElementById('show');
@@ -21,6 +25,8 @@
         });
 
         io.emit('connectHost');
+
+        io.on('answerReceived', answerReceived);
     </script>
 	</body>
 </html>
