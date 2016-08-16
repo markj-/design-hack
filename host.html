@@ -143,7 +143,11 @@
           var green = 75 + (percentage);
           var red = 255 - (percentage * 2.55);
           var blue = 60 - (percentage * 0.2)
-          return rgbToHex(red, green, blue);
+          if(percentage === 50) {
+            return "#bd2f9c";
+          } else {
+            return rgbToHex(red, green, blue);
+          }
         }
 
         function updateBackgroundColour(percentage) {
@@ -156,9 +160,11 @@
         function resetScreen() {
           percentage = 0;
           numPlayers = 0;
+          numAnswers = 0;
           document.getElementById('percentage').innerHTML = '';
+          document.getElementById('answers').innerHTML = '';
           document.body.style = "background-color: white";
-          document.getElementById('emoji').src = '';
+          document.getElementById('emoji').src = 'logo.png';
         }
 
         function correctAnswerReceived() {
@@ -178,7 +184,6 @@
             var percentage = Math.round(getPercentageCorrect());
             document.getElementById('percentage').innerHTML = percentage + '%';
             document.getElementById('answers').innerHTML = numAnswers + ' answers received';
-
             updateBackgroundColour(percentage);
 
             var emoji;
