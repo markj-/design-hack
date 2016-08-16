@@ -28,6 +28,11 @@ io.on('connection', function(socket){
 		player.emit('showImage');
 	});
 
+	socket.on('hideImage', function() {
+		console.log('hide image');
+		player.emit('hideImage');
+	});
+
 	socket.on('correctAnswerReceived', function() {
 		console.log('correct answer received');
 		host.emit('correctAnswerReceived');

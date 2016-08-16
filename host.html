@@ -4,12 +4,26 @@
 		<title></title>
         <link rel="stylesheet" href="normalize.css">
         <style>
-            .next {
+            .is-hidden {
+                display: none;
+            }
+
+            .show,
+            .hide {
                 position: absolute;
                 bottom: 0;
                 left: 0;
+                width: 49%;
+                border-style: none;
+                font-size: 18px;
+                padding: 12px;
+            }
+
+            .next {
+                position: absolute;
+                bottom: 0;
                 right: 0;
-                width: 100%;
+                width: 50%;
                 border-style: none;
                 font-size: 18px;
                 padding: 12px;
@@ -41,6 +55,9 @@
 	<body>
 
     <button class="next" id="next">Next</button>
+
+    <button class="show" id="show">Show media</button>
+    <button class="hide is-hidden" id="hide">Hide media</button>
 
     <div id="emoji"></div>
     <div id="percentage">0%</div>
@@ -84,14 +101,40 @@
 
     	var io = io('http://127.0.0.1:3000');
     	var button = document.getElementById('next');
-        // var button2 = document.getElementById('show');
+        var button2 = document.getElementById('show');
+        var button3 = document.getElementById('hide');
+
+        function hideShow() {
+            button2.classList.add('is-hidden');
+        }
+
+        function showShow() {
+            button2.classList.remove('is-hidden');
+        }
+
+        function hideHide() {
+            button3.classList.add('is-hidden');
+        }
+
+        function showHide() {
+            button3.classList.remove('is-hidden');
+        }
 
         button.addEventListener('click', function() {
             io.emit('next');
         });
-        // button2.addEventListener('click', function() {
-        //     io.emit('showImage');
-        // });
+
+        button2.addEventListener('click', function() {
+            hideShow();
+            showHide();
+            io.emit('showImage');
+        });
+
+        button3.addEventListener('click', function() {
+            hideHide();
+            showShow();
+            io.emit('hideImage');
+        });
 
         io.emit('connectHost');
 
